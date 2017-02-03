@@ -6,7 +6,8 @@ const Program = require('commander')
 const Backup = require('../src')
 const { version } = require('../package.json')
 
-Program.version(version)
+Program
+  .version(version)
   .option(
     '-h, --host <mongo host and port>',
     'Host connection to mongo database host')
@@ -28,6 +29,9 @@ Program.version(version)
   .option(
     '--secretAccessKey <secretAccessKey>',
     'AWS secretAccessKey')
+  .option(
+    '--retry <number>',
+    'Number of time to retry on sending backup to S3')
   .parse(process.argv)
 
 const options = {
