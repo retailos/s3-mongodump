@@ -25,6 +25,7 @@ Perform mongodump on database host and send backup to s3
     -b --bucket <bucket>                 AWS bucket location (includes path to uploaded folder)
     --accessKeyId <accessKeyId>          AWS accessKeyId
     --secretAccessKey <secretAccessKey>  AWS secretAccessKey
+    --retry <number>                     Number of time to retry on sending backup to S3
 
 ### API Usage
 
