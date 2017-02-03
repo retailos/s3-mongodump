@@ -6,7 +6,7 @@ const Sinon = require('sinon')
 
 let SpawnStub = {}
 const Backup = Proxyquire('../src/backup', {
-  './exec': SpawnStub
+  'child_process': SpawnStub
 })
 
 const { beforeEach, describe, it } = exports.lab = Lab.script()

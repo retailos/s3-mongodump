@@ -1,4 +1,4 @@
-const Exec = require('./exec')
+const Exec = require('child_process')
 const Logger = require('./logger')
 
 const getTarArgs = (options) => [
