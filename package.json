@@ -3,7 +3,7 @@
   "bin": {
     "s3-mongodump": "./bin/s3-mongodump"
   },
-  "name": "mongodump-s3",
+  "name": "s3-mongodump",
   "version": "1.0.0",
   "description": "Backup database host utility",
   "main": "src/index.js",
