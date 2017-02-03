@@ -34,5 +34,8 @@ module.exports = (options) => (done) => {
     Logger.debug('progress', progressMd5Amount, progressAmount, progressTotal)
   })
 
-  uploader.on('end', done)
+  uploader.on('end', (data) => {
+    Logger.debug('sendToS3', { data })
+    done()
+  })
 }
