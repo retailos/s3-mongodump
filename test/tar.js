@@ -6,7 +6,7 @@ const Sinon = require('sinon')
 
 let SpawnStub = {}
 const Tar = Proxyquire('../src/tar', {
-  './exec': SpawnStub
+  'child_process': SpawnStub
 })
 
 const { beforeEach, describe, it } = exports.lab = Lab.script()
@@ -25,7 +25,8 @@ describe('src/tar', () => {
   it('builds tar arguments', (done) => {
     const tarArgs = [
       '-czvf',
-      `${process.cwd()}.tar.gz`
+      `${process.cwd()}.tar.gz`,
+      process.cwd()
     ]
 
     Tar(options)(() => {

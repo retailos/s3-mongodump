@@ -4,9 +4,10 @@ const Lab = require('lab')
 const Proxyquire = require('proxyquire')
 const Sinon = require('sinon')
 
-let SpawnStub = {}
+let ClientStub = {}
+let S3Stub = {}
 const SendToS3 = Proxyquire('../src/sendToS3', {
-  's3': SpawnStub
+  's3': S3Stub
 })
 
 const { beforeEach, describe, it } = exports.lab = Lab.script()
@@ -16,7 +17,8 @@ describe('src/sendToS3', () => {
 
   beforeEach((done) => {
     emitter = new EventEmitter()
-    SpawnStub.createClient = Sinon.stub().returns(emitter)
+    ClientStub.uploadFile = Sinon.stub().returns(emitter)
+    S3Stub.createClient = Sinon.stub().returns(ClientStub)
     options = {
       accessKeyId: 'accessKeyId',
       secretAccessKey: 'secretAccessKey',
@@ -28,10 +30,17 @@ describe('src/sendToS3', () => {
   })
 
   it('builds s3 options', (done) => {
+    const uploaderOptions = {
+      localFile: `${process.cwd()}.tar.gz`,
+      s3Params: {
+        Bucket: 'bucket',
+        Key: 's3-mongodump.tar.gz',
+        ACL: 'private'
+      }
+    }
+
     const s3Options = {
-      Bucket: 'bucket',
-      Key: `${process.cwd()}.tar.gz`,
-      ACL: 'private',
+      s3RetryCount: 3,
       s3Options: {
         accessKeyId: 'accessKeyId',
         secretAccessKey: 'secretAccessKey'
@@ -39,7 +48,36 @@ describe('src/sendToS3', () => {
     }
 
     SendToS3(options)(() => {
-      expect(SpawnStub.createClient.calledWith(s3Options)).to.be.true()
+      expect(S3Stub.createClient.calledWith(s3Options)).to.be.true()
+      expect(ClientStub.uploadFile.calledWith(uploaderOptions)).to.be.true()
+      done()
+    })
+
+    emitter.emit('end')
+  })
+
+  it('uses options.retry if supplied', (done) => {
+    options.retry = 10
+    const uploaderOptions = {
+      localFile: `${process.cwd()}.tar.gz`,
+      s3Params: {
+        Bucket: 'bucket',
+        Key: 's3-mongodump.tar.gz',
+        ACL: 'private'
+      }
+    }
+
+    const s3Options = {
+      s3RetryCount: 10,
+      s3Options: {
+        accessKeyId: 'accessKeyId',
+        secretAccessKey: 'secretAccessKey'
+      }
+    }
+
+    SendToS3(options)(() => {
+      expect(S3Stub.createClient.calledWith(s3Options)).to.be.true()
+      expect(ClientStub.uploadFile.calledWith(uploaderOptions)).to.be.true()
       done()
     })
 

@@ -2,7 +2,7 @@ const Waterfall = require('run-waterfall')
 
 const Backup = require('./backup')
 const Tar = require('./tar')
-const SendToS3 = require('./SendToS3')
+const SendToS3 = require('./sendToS3')
 
 const isInvalidOptions = (options) => {
   if (!options.host) return new Error('options.host is required')
