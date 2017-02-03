@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+
+const Path = require('path')
+const Program = require('commander')
+
+const Backup = require('../src')
+const { version } = require('../package.json')
+
+Program.version(version)
+  .option(
+    '-h, --host <mongo host and port>',
+    'Host connection to mongo database host')
+  .option(
+    '-u --username <username>',
+    'DB host admin username')
+  .option(
+    '-p, --password <password>',
+    'DB host admin password')
+  .option(
+    '-o --output <path>',
+    'Output path to store tar file')
+  .option(
+    '-b --bucket <bucket>',
+    'AWS bucket location (includes path to uploaded folder)')
+  .option(
+    '--accessKeyId <accessKeyId>',
+    'AWS accessKeyId')
+  .option(
+    '--secretAccessKey <secretAccessKey>',
+    'AWS secretAccessKey')
+  .parse(process.argv)
+
+const options = {
+  host: Program.host,
+  username: Program.username,
+  password: Program.password,
+  output: Program.output,
+  bucket: Program.bucket,
+  accessKeyId: Program.accessKeyId,
+  secretAccessKey: Program.secretAccessKey
+}
+
+console.log('Performing backup...')
+
+Backup(options, (err) => {
+  if (err) {
+    console.error(err.message)
+    return process.exit(1)
+  }
+
+  console.log('Backup completed')
+  process.exit(0)
+})

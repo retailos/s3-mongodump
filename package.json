@@ -1,0 +1,40 @@
+{
+  "author": "Jeremiah Harlan <jeremiah.harlan@gmail.com>",
+  "bin": {
+    "s3-mongodump": "./bin/s3-mongodump"
+  },
+  "name": "mongodump-s3",
+  "version": "0.0.0",
+  "description": "Backup database host utility",
+  "main": "src/index.js",
+  "keywords": [
+    "mongo",
+    "mongodb",
+    "backup",
+    "mongodump",
+    "s3"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modulus/logger": "1.2.0",
+    "commander": "2.9.0",
+    "cross-spawn": "5.0.1",
+    "run-waterfall": "1.1.3",
+    "s3": "4.4.0"
+  },
+  "devDependencies": {
+    "code": "4.0.0",
+    "lab": "12.1.0",
+    "proxyquire": "1.7.11",
+    "sinon": "1.17.7",
+    "standard": "8.6.0"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "lint": "standard",
+    "test": "npm run lint && npm run unit",
+    "unit": "lab -cv --threshold 100"
+  }
+}
