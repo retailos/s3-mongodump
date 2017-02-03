@@ -25,7 +25,8 @@ describe('src/tar', () => {
   it('builds tar arguments', (done) => {
     const tarArgs = [
       '-czvf',
-      `${process.cwd()}.tar.gz`
+      `${process.cwd()}.tar.gz`,
+      process.cwd()
     ]
 
     Tar(options)(() => {
