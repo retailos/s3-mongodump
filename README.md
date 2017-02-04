@@ -21,6 +21,7 @@ Perform mongodump on database host and send backup to s3
     -h, --host <mongo host>              Host connection to mongo database host
     -u --username <username>             DB host admin username
     -p, --password <password>            DB host admin password
+    --oplog                              Oplog flag for mongodump command
     -o --output <path>                   Output path to store tar file
     -b --bucket <bucket>                 AWS bucket location (includes path to uploaded folder)
     --accessKeyId <accessKeyId>          AWS accessKeyId
