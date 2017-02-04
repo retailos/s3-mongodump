@@ -18,6 +18,9 @@ Program
     '-p, --password <password>',
     'DB host admin password')
   .option(
+    '--oplog',
+    'Oplog flag for mongodump command')
+  .option(
     '-o --output <path>',
     'Output path to store tar file')
   .option(
@@ -39,9 +42,11 @@ const options = {
   username: Program.username,
   password: Program.password,
   output: Program.output,
+  oplog: Program.oplog,
   bucket: Program.bucket,
   accessKeyId: Program.accessKeyId,
-  secretAccessKey: Program.secretAccessKey
+  secretAccessKey: Program.secretAccessKey,
+  retry: Program.retry
 }
 
 console.log('Performing backup...')
