@@ -4,7 +4,7 @@
     "s3-mongodump": "./bin/s3-mongodump"
   },
   "name": "s3-mongodump",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Backup database host utility",
   "main": "src/index.js",
   "keywords": [
