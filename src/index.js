@@ -1,6 +1,7 @@
 const Waterfall = require('run-waterfall')
 
 const Backup = require('./backup')
+const Cleanup = require('./cleanup')
 const Tar = require('./tar')
 const SendToS3 = require('./sendToS3')
 
@@ -19,6 +20,9 @@ module.exports = (options, done) => {
   const isInvalid = isInvalidOptions(options)
   if (isInvalid) return done(isInvalid)
 
-  const operations = [Backup(options), Tar(options), SendToS3(options)]
+  const operations = [
+    Backup(options), Tar(options), SendToS3(options), Cleanup(options)
+  ]
+
   Waterfall(operations, done)
 }
