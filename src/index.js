@@ -20,6 +20,8 @@ module.exports = (options, done) => {
   const isInvalid = isInvalidOptions(options)
   if (isInvalid) return done(isInvalid)
 
+  options.datetime = new Date()
+
   const operations = [
     Backup(options), Tar(options), SendToS3(options), Cleanup(options)
   ]

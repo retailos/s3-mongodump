@@ -12,16 +12,18 @@ const Backup = Proxyquire('../src/backup', {
 const { beforeEach, describe, it } = exports.lab = Lab.script()
 
 describe('src/backup', () => {
-  let emitter, options
+  let datetime, emitter, options
 
   beforeEach((done) => {
+    datetime = new Date()
     emitter = new EventEmitter()
     SpawnStub.spawn = Sinon.stub().returns(emitter)
     options = {
       host: 'mongodb://localhost:27017',
       username: 'username',
       password: 'password',
-      output: process.cwd()
+      output: process.cwd(),
+      datetime
     }
 
     done()
@@ -32,7 +34,7 @@ describe('src/backup', () => {
       '--host', 'mongodb://localhost:27017',
       '--username', 'username',
       '--password', 'password',
-      '-o', process.cwd()
+      '-o', `${process.cwd()}/${datetime}`
     ]
 
     Backup(options)(() => {
@@ -48,7 +50,7 @@ describe('src/backup', () => {
       '--host', 'mongodb://localhost:27017',
       '--username', 'username',
       '--password', 'password',
-      '-o', process.cwd(),
+      '-o', `${process.cwd()}/${datetime}`,
       '--oplog'
     ]
 

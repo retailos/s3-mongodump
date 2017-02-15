@@ -3,8 +3,8 @@ const Logger = require('./logger')
 
 const getTarArgs = (options) => [
   '-czvf',
-  `${options.output}.tar.gz`,
-  options.output
+  `${options.output}/${options.datetime}.tar.gz`,
+  `${options.output}/${options.datetime}`
 ]
 
 module.exports = (options) => (done) => {

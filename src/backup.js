@@ -6,7 +6,7 @@ const getBackupArgs = (options) => {
     '--host', options.host,
     '--username', options.username,
     '--password', options.password,
-    '-o', options.output
+    '-o', `${options.output}/${options.datetime}`
   ]
 
   if (options.oplog) args.push('--oplog')
@@ -14,7 +14,7 @@ const getBackupArgs = (options) => {
 }
 
 module.exports = (options) => (done) => {
-  Logger.debug('backup', { host: options.host, output: options.output })
+  Logger.debug('backup', options.host, `${options.output}/${options.datetime}`)
 
   const backupArgs = getBackupArgs(options)
   const command = Exec.spawn('mongodump', backupArgs, { stdio: 'inherit' })

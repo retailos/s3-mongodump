@@ -11,10 +11,11 @@ const Cleanup = Proxyquire('../src/cleanup', {
 const { afterEach, beforeEach, describe, it } = exports.lab = Lab.script()
 
 describe('src/cleanup', () => {
-  let options = { output: process.cwd() }
+  let datetime, options
 
   beforeEach((done) => {
-    options = { output: process.cwd() }
+    datetime = new Date()
+    options = { output: process.cwd(), datetime }
     rmdirStub.yields()
     unlinkStub.yields()
     done()
@@ -58,8 +59,8 @@ describe('src/cleanup', () => {
   it('removes option.output dir and tar file', (done) => {
     Cleanup(options)((err) => {
       expect(err).to.not.exist()
-      expect(rmdirStub.calledWith(options.output)).to.be.true()
-      expect(unlinkStub.calledWith(`${options.output}.tar.gz`)).to.be.true()
+      expect(rmdirStub.calledWith(`${options.output}/${datetime}`)).to.be.true()
+      expect(unlinkStub.calledWith(`${options.output}/${datetime}.tar.gz`)).to.be.true()
       done()
     })
   })

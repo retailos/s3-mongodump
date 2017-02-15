@@ -13,9 +13,10 @@ const SendToS3 = Proxyquire('../src/sendToS3', {
 const { beforeEach, describe, it } = exports.lab = Lab.script()
 
 describe('src/sendToS3', () => {
-  let emitter, options
+  let datetime, emitter, options
 
   beforeEach((done) => {
+    datetime = new Date()
     emitter = new EventEmitter()
     ClientStub.uploadFile = Sinon.stub().returns(emitter)
     S3Stub.createClient = Sinon.stub().returns(ClientStub)
@@ -23,7 +24,8 @@ describe('src/sendToS3', () => {
       accessKeyId: 'accessKeyId',
       secretAccessKey: 'secretAccessKey',
       bucket: 'bucket',
-      output: process.cwd()
+      output: process.cwd(),
+      datetime
     }
 
     done()
@@ -31,10 +33,10 @@ describe('src/sendToS3', () => {
 
   it('builds s3 options', (done) => {
     const uploaderOptions = {
-      localFile: `${process.cwd()}.tar.gz`,
+      localFile: `${process.cwd()}/${datetime}.tar.gz`,
       s3Params: {
         Bucket: 'bucket',
-        Key: 's3-mongodump.tar.gz',
+        Key: `${datetime}.tar.gz`,
         ACL: 'private'
       }
     }
@@ -59,10 +61,10 @@ describe('src/sendToS3', () => {
   it('uses options.retry if supplied', (done) => {
     options.retry = 10
     const uploaderOptions = {
-      localFile: `${process.cwd()}.tar.gz`,
+      localFile: `${process.cwd()}/${datetime}.tar.gz`,
       s3Params: {
         Bucket: 'bucket',
-        Key: 's3-mongodump.tar.gz',
+        Key: `${datetime}.tar.gz`,
         ACL: 'private'
       }
     }

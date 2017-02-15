@@ -12,12 +12,13 @@ const Tar = Proxyquire('../src/tar', {
 const { beforeEach, describe, it } = exports.lab = Lab.script()
 
 describe('src/tar', () => {
-  let emitter, options
+  let datetime, emitter, options
 
   beforeEach((done) => {
+    datetime = new Date()
     emitter = new EventEmitter()
     SpawnStub.spawn = Sinon.stub().returns(emitter)
-    options = { output: process.cwd() }
+    options = { output: process.cwd(), datetime }
 
     done()
   })
@@ -25,8 +26,8 @@ describe('src/tar', () => {
   it('builds tar arguments', (done) => {
     const tarArgs = [
       '-czvf',
-      `${process.cwd()}.tar.gz`,
-      process.cwd()
+      `${process.cwd()}/${datetime}.tar.gz`,
+      `${process.cwd()}/${datetime}`
     ]
 
     Tar(options)(() => {

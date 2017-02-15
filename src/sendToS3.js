@@ -5,10 +5,10 @@ const Logger = require('./logger')
 
 const getS3Options = (options) => ({
   uploaderOptions: {
-    localFile: `${options.output}.tar.gz`,
+    localFile: `${options.output}/${options.datetime}.tar.gz`,
     s3Params: {
       Bucket: options.bucket,
-      Key: basename(`${options.output}.tar.gz`),
+      Key: basename(`${options.output}/${options.datetime}.tar.gz`),
       ACL: 'private'
     }
   },
