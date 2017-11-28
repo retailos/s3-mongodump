@@ -63,6 +63,24 @@ describe('src/backup', () => {
     emitter.emit('close', 0)
   })
 
+  it('adds db arg if present in options', (done) => {
+    const backupArgs = [
+      '--host', 'mongodb://localhost:27017',
+      '--username', 'username',
+      '--password', 'password',
+      '-o', `${process.cwd()}/${datetime}`,
+      '--db', 'testDB'
+    ]
+
+    options.db = 'testDB'
+    Backup(options)(() => {
+      expect(SpawnStub.spawn.calledWith('mongodump', backupArgs)).to.be.true()
+      done()
+    })
+
+    emitter.emit('close', 0)
+  })
+
   it('yields an error when emitted', (done) => {
     const errMessage = new Error('emitter error')
     Backup(options)((err) => {

@@ -9,6 +9,10 @@ const getBackupArgs = (options) => {
     '-o', `${options.output}/${options.datetime}`
   ]
 
+  if (options.db) {
+    args.push('--db')
+    args.push(options.db)
+  }
   if (options.oplog) args.push('--oplog')
   return args
 }
