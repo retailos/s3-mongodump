@@ -19,6 +19,7 @@ Perform mongodump on database host and send backup to s3
     -h, --help                           output usage information
     -V, --version                        output the version number
     -h, --host <mongo host>              Host connection to mongo database host
+    -d, --db                             Mongo database to connect to
     -u --username <username>             DB host admin username
     -p, --password <password>            DB host admin password
     --oplog                              Oplog flag for mongodump command
