@@ -18,6 +18,9 @@ Program
     '-p, --password <password>',
     'DB host admin password')
   .option(
+    '-d, --db <dbname>',
+    'DB ma,e')
+  .option(
     '--oplog',
     'Oplog flag for mongodump command')
   .option(
@@ -41,6 +44,7 @@ const options = {
   host: Program.host,
   username: Program.username,
   password: Program.password,
+  db: Program.db,
   output: Program.output,
   oplog: Program.oplog,
   bucket: Program.bucket,
