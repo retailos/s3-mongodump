@@ -16,7 +16,8 @@ const getS3Options = (options) => ({
     s3RetryCount: options.retry || 3,
     s3Options: {
       accessKeyId: options.accessKeyId,
-      secretAccessKey: options.secretAccessKey
+      secretAccessKey: options.secretAccessKey,
+      region: 'eu-west-1'
     }
   }
 })
